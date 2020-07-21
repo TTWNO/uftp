@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  {% for file in files %}
+    {% if files[file] == 'd' %}
+    D <a href="/show/{{ root }}/{{ file }}">{{ file }}</a>
+      <form action="/delete" method="POST" class="inline" onsubmit="return show_alert(this);">
+        <input type="text" name="directory" value="{{ root }}" hidden>
+        <input type="text" name="filename" value="{{ file }}" hidden>
+        <input type="text" name="type" value="directory" hidden>
+        <input type="submit" value="X" class="delete-file">
+      </form>
+      <br>
+    {% elif files[file] == 'f' %}
+    F <a href="/download/{{ root }}/{{ file }}" target="_blank">{{ file }}</a>
+      <form action="/delete" method="POST" class="inline" onsubmit="return show_alert(this);">
+        <input type="text" name="directory" value="{{ root }}" hidden>
+        <input type="text" name="filename" value="{{ file }}" hidden>
+        <input type="text" name="type" value="file" hidden>
+        <input type="submit" value="X" class="delete-file">
+      </form>
+      <br>
+    {% endif %}
+  {% endfor %}
+  <form action="/upload" method="POST" enctype="multipart/form-data">
+    <input type="file" name="file">
+    <input type="text" name="dir" value="{{ root }}" hidden>
+    <input type="submit" value="Upload">
+  </form>
+{% endblock %}
