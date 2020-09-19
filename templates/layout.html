@@ -13,6 +13,12 @@
         font-weight: bold;
       }
     </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      {% block body %}
+      {% endblock %}
+    </div>
     <script>
       function show_alert() {
         if(confirm("Do you really want to do this?")) {
@@ -34,12 +40,10 @@
         });
         request.send(data);
       }
+      window.onload = () => {
+        document.getElementById('submit-file-btn').addEventListener('click', upload_file);
+      };
       </script>
-  </head>
-  <body>
-    <div id="wrapper">
-      {% block body %}
-      {% endblock %}
-    </div>
+
   </body>
 </html>
