@@ -20,6 +20,9 @@
       {% endblock %}
     </div>
     <script>
+      const progBar = document.getElementById('progress');
+      const progUp = document.getElementById('progress-uploaded');
+      const progTotal = document.getElementById('progress-total');
       function show_alert() {
         if(confirm("Do you really want to do this?")) {
           this.form.submit();
@@ -31,12 +34,18 @@
         data.set('dir', document.getElementById('dir').value);
         var request = new XMLHttpRequest();
         request.open('post', '/upload');
+        /* every .25 seconds, roughly */
         request.upload.addEventListener('progress', (e) => {
-          var perc = (e.loaded/e.total)*100;
+          var perc = Math.floor((e.loaded/e.total)*100);
+          progTotal.innerHTML = e.total;
+          progUp.innerHTML = e.loaded;
           console.log(perc);
+          progBar.value = perc;
         });
+        /* when finished uploading */
         request.addEventListener('load', (e) => {
           console.log("done");
+          location.reload(false);
         });
         request.send(data);
       }
