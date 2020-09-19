@@ -15,11 +15,25 @@
     </style>
     <script>
       function show_alert() {
-  if(!confirm("Do you really want to do this?")) {
-    return false;
-  }
-  this.form.submit();
-}
+        if(confirm("Do you really want to do this?")) {
+          this.form.submit();
+        }
+      }
+      function upload_file() {
+        var data = new FormData();
+        data.append('file', document.getElementById('fileupload').files[0]);
+        data.set('dir', document.getElementById('dir').value);
+        var request = new XMLHttpRequest();
+        request.open('post', '/upload');
+        request.addEventListener('progress', (e) => {
+          var perc = (e.loaded/e.total)*100;
+          console.log(perc);
+        });
+        request.addEventListener('load', (e) => {
+          console.log("done");
+        });
+        request.send(data);
+      }
       </script>
   </head>
   <body>

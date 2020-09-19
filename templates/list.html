@@ -22,9 +22,17 @@
       <br>
     {% endif %}
   {% endfor %}
-  <form action="/upload" method="POST" enctype="multipart/form-data">
-    <input type="file" name="file">
-    <input type="text" name="dir" value="{{ root }}" hidden>
-    <input type="submit" value="Upload">
-  </form>
+  <hr>
+  <div id="upload_inputs">
+    <input type="file" name="file" id="fileupload">
+    <input type="text" name="dir" value="{{ root }}" hidden id="dir">
+    <input type="submit" value="Upload" onclick="upload_file();">
+  </div>
+  <label for="progress">Upload Progress:</label>
+  <progress id="progress" min="0" max="100" value="0"></progress>
+  <br>
+  <label for="progress-adv">Advanced Progress Stats:</label>
+  <span id="progress-adv">
+    <span id="progress-uploaded">0</span>/<span id="progress-total">0</span>
+  </span>
 {% endblock %}
